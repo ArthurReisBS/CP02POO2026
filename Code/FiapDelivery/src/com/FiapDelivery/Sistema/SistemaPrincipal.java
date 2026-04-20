@@ -49,17 +49,36 @@ public class SistemaPrincipal {
 	        	// Erros veículo:
 	    		System.out.println("Erros dos veículos ao tentar inicializar objetos com");
 	        	System.out.println("String da placa vazia e com peso menor ou igual a 0:");
-	        	Caminhao caminhao = new Caminhao("", -1);
+	        	try {
+	                Caminhao erroCaminhao = new Caminhao("", -1);
+	                System.out.println("Caminhão criado com sucesso!");
+	            } catch (IllegalArgumentException e) {
+	                System.err.println(e.getMessage());
+	            }
 	        	
 	        	// Erros pacote:
 	        	System.out.println("\nErros dos pacotes ao tentar inicializar objetos com");
 	        	System.out.println("String do código vazio e com peso menor ou igual a 0:");
-	        	Pacote pacote = new Pacote("", 0);
+	        	try {
+		        	Pacote erroPacote = new Pacote("", "", 0);
+	                System.out.println("Pacote criado com sucesso!");
+	            } catch (IllegalArgumentException e) {
+	                System.err.println(e.getMessage());
+	            }
 	        	
 	        	// Erros rota:
 	        	System.out.println("\nErros das rotas ao tentar inicializar objetos com");
 	        	System.out.println("String do local de retirada e de entrega vazios:");
-	        	Rota rota = new Rota(pacote, caminhao, "", "");
+	        	try {
+	        		// Iniciando Objetos de forma correta para exibir o erro da Rota:
+	        		Caminhao erroRotaCaminhao = new Caminhao("RGB1234", 4000);
+	        		Pacote erroRotaPacote = new Pacote("aad8AD8ad", "20x Pneus", 500);
+	        		
+	        		Rota rota = new Rota(erroRotaPacote, erroRotaCaminhao, "A", "");
+	                System.out.println("Rota criada com sucesso!");
+	            } catch (IllegalArgumentException e) {
+	                System.err.println(e.getMessage());
+	            }
 	        	
 	        	esperarUsuario(scanner);
 	        	break;
