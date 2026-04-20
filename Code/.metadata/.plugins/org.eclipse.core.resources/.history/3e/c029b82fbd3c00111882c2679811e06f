@@ -1,0 +1,59 @@
+package com.FiapDelivery.Sistema;
+
+import com.FiapDelivery.Classes.Caminhao;
+import com.FiapDelivery.Classes.Pacote;
+import com.FiapDelivery.Classes.Rota;
+
+import java.util.Scanner;
+
+public class SistemaPrincipal {
+	public static void main(String[] args) {
+		// Iniciando variáveis para swicth case:
+		Scanner scanner = new Scanner(System.in);
+		boolean sair = false;
+		
+		while(sair = false) {
+			// Opções:
+			System.out.println("------------------------------------");
+			System.out.println("-- Selecione a opção que desejar: --");
+			System.out.println("------------- 0: Sair --------------");
+			System.out.println("--------- 1: Testar erros ----------");
+			System.out.println("-------- 2: Fazer pedidos ----------");
+			System.out.println("------ 3: Visualizar pedidos -------");
+			System.out.println("------------------------------------");
+			System.out.print("Opção: ");
+			int opcao = scanner.nextInt();
+			
+			// Switch case para selecionar a ação desejada:
+			switch (opcao) {
+	    	case 0:
+	        	sair = true;
+	        	break;
+	    	case 1:
+	    		System.out.println("----------- TESTE DE ERROS ---------");
+	        	// Erros veículo:
+	    		System.out.println("Erros dos veículos ao tentar inicializar objetos com");
+	        	System.out.println("String da placa vazia e com peso menor ou igual a 0:");
+	        	Caminhao caminhao = new Caminhao("", -1);
+	        	
+	        	// Erros pacote:
+	        	System.out.println("Erros dos pacotes ao tentar inicializar objetos com");
+	        	System.out.println("String do código vazio e com peso menor ou igual a 0:");
+	        	Pacote pacote = new Pacote("", 0);
+	        	
+	        	// Erros rota:
+	        	System.out.println("Erros dos pacotes ao tentar inicializar objetos com");
+	        	System.out.println("String do local de retirada e de entrega vazios:");
+	        	Rota rota = new Rota(pacote, caminhao, "", "");
+	    	case 2:
+	        	System.out.println("");
+	    	case 3:
+	        	System.out.println("");
+	    		break;
+	    	default:
+	    	// code if no case matches
+		}
+		}
+		scanner.close();
+	}
+}

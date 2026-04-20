@@ -1,0 +1,7 @@
+package com.FiapDelivery.Classes;
+
+public class Caminhao {
+	String pl;
+	public double cap;
+	public int eixos;
+}

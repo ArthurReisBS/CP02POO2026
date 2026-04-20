@@ -1,0 +1,7 @@
+package com.FiapDelivery.Classes;
+
+public class Pacote {
+	public String cod;
+	public double p;
+	public String s;
+}

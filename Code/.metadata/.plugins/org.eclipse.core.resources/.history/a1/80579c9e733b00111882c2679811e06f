@@ -1,0 +1,7 @@
+package com.FiapDelivery.Classes;
+
+public class Moto {
+	public String pl;
+	public double cap;
+	public boolean bau;
+}

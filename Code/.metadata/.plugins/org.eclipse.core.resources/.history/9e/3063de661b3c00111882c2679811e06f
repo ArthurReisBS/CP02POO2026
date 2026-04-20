@@ -1,0 +1,44 @@
+package com.FiapDelivery.Classes;
+
+public class Rota {
+	
+	// Atributos:
+	private String localRetirada;
+	private String localEntrega;
+	private Pacote produto;
+	private Veiculo transportador;
+	
+	public Rota(Pacote produto, Veiculo transportador, String localRetirada, String localEntrega) {
+		this.produto = produto;
+		this.transportador = transportador;
+		this.setLocalRetirada(localRetirada);
+		this.setLocalEntrega(localEntrega);
+		
+	}
+	
+	// Setters:
+	private void setLocalRetirada(String novoLocal) {
+		// O local não pode ser nulo nem vazio:
+		if (novoLocal != null && !novoLocal.trim().isEmpty()) {
+			this.localRetirada = novoLocal;
+			System.out.println("Sucesso: O local de retirada agora é "+ this.localRetirada);
+		} else {
+			System.out.println("Erro: O local de retirada informado é inválido!");
+		}
+	}
+	
+	private void setLocalEntrega(String novoLocal) {
+		// O local não pode ser nulo nem vazio:
+		if (novoLocal != null && !novoLocal.trim().isEmpty()) {
+			this.localEntrega = novoLocal;
+			System.out.println("Sucesso: O local de entrega agora é "+ this.localEntrega);
+		} else {
+			System.out.println("Erro: O local de entrega informado é inválido!");
+		}
+	}
+	
+	// Métodos:
+	public void notificacaoEntrega() {
+		System.out.println("Levando pacote "+ produto.getCodigoPacote() +" no veiculo "+ transportador.getPlaca());
+	}
+}

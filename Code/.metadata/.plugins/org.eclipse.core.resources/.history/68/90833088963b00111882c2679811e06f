@@ -1,0 +1,25 @@
+package com.FiapDelivery.Classes;
+
+public class Moto extends Veiculo {
+	// Atributo excluisivo:
+	private boolean bau;
+	
+	public Moto(String placa, double capacidade, boolean bau) {
+		super(placa, capacidade);
+		this.setBau(bau);
+	}
+	
+	// Getter:
+	public void getBau() {
+		if(bau = true) {
+			System.out.println("Tem baú");
+		} else {
+			System.out.println("Não tem baú");
+		}
+	}
+	
+	// Setter:
+	private void setBau(boolean decideBau) {
+		this.bau = decideBau;
+	}
+}

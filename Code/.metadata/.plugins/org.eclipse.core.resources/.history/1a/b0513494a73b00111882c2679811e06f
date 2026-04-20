@@ -1,0 +1,16 @@
+package com.FiapDelivery.Classes;
+
+public class Rota {
+	private Pacote produto;
+	private Veiculo transportador;
+	
+	public Rota(Pacote produto, Veiculo transportador) {
+		this.produto = produto;
+		this.transportador = transportador;
+	}
+	
+	// Métodos:
+	public void notificacaoEntrega() {
+		System.out.println("Levando pacote "+ produto.getCodigoPacote() +" no veiculo "+ transportador.getPlaca());
+	}
+}

@@ -1,0 +1,11 @@
+package com.FiapDelivery.Classes;
+
+public class Rota {
+	private Pacote pacote;
+	private Caminhao caminhao;
+	
+	
+	public void notificacaoEntrega() {
+		System.out.println("Levando pacote "+ p1.cod +" no veiculo "+ c1.pl);
+	}
+}

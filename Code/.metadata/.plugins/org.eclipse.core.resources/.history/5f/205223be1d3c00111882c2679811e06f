@@ -1,0 +1,60 @@
+package com.FiapDelivery.Classes;
+
+public class Pacote {
+	
+	// Atributos:
+	private String codigoPacote;
+	private double peso;
+	private int situacaoEntrega;
+	
+	public Pacote(String codigoPacote, double peso) {
+		this.situacaoEntrega = 0;
+		this.setCodigoPacote(codigoPacote);
+		this.setPeso(peso);
+	}
+	
+	// Getters:
+	public String getCodigoPacote() {
+		return this.codigoPacote;
+	}
+	
+	public double getPeso() {
+		return this.peso;
+	}
+	
+	public void getSituacaoEntrega() {
+		if(this.situacaoEntrega == 0 ) {
+			System.out.println("O pedido está em fase de preparo.");
+		} else if(this.situacaoEntrega == 1) {
+			System.out.println("O pedido está a caminho.");
+		} else {
+			System.out.println("O pedido foi entregue.");
+		}
+	}
+	
+	// Setters:
+	private void setCodigoPacote(String novoCodigoPacote) {
+		// O código não pode ser nulo nem vazio:
+		if (novoCodigoPacote != null && !novoCodigoPacote.trim().isEmpty()) {
+			this.codigoPacote = novoCodigoPacote;
+			System.out.println("Sucesso: O código agora é "+ this.codigoPacote);
+		} else {
+			System.out.println("Erro: O código informado é inválido!");
+		}
+	}
+	
+	private void setPeso(double novoPeso) {
+		if(peso <= 0) {
+			System.out.println("Eroo: ;");
+		}
+	}
+	
+	
+	// Método:
+	public void mudaSituacaoEntrega(int novaSituacao) {
+		if(novaSituacao > 2 || novaSituacao < 0) {
+			System.out.println("Erro: A situação só pode ser marcada por 0(Preparando), 1(A caminho) e 2(Entregue)!");
+			return;
+		} this.situacaoEntrega = novaSituacao;
+	}
+}

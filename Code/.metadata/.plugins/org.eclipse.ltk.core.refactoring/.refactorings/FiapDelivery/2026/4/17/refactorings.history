@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;entrega&apos; in &apos;com.FiapDelivery.Classes.Rota.Rota(...)&apos; to &apos;produto&apos;&#x0A;- Original project: &apos;FiapDelivery&apos;&#x0A;- Original element: &apos;com.FiapDelivery.Classes.Rota.Rota(Pacote, Veiculo).entrega&apos;&#x0A;- Renamed element: &apos;entrega&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;entrega&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;com.FiapDelivery.Classes{Rota.java[Rota~Rota~QPacote;~QVeiculo;@entrega!127!140!134!140!QPacote;!0!true" name="produto" references="true" stamp="1776572024714" version="1.0"/>
+</session>
