@@ -4,15 +4,12 @@ import com.FiapDelivery.Classes.Caminhao;
 import com.FiapDelivery.Classes.Moto;
 import com.FiapDelivery.Classes.Pacote;
 import com.FiapDelivery.Classes.Pedidos;
-import com.FiapDelivery.Classes.Veiculo;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class SistemaPrincipal {
 	// Apenas um "segurador de página":
-	Scanner scanner = new Scanner(System.in);
 	private static void esperarUsuario(Scanner scanner) {
 	    while (true) {
 	        System.out.println("\n-- 0: para voltar --");
