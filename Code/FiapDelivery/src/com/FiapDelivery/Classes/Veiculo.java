@@ -23,18 +23,14 @@ public class Veiculo {
 	private void setCapacidade(double novaCapacidade) {
 		if(novaCapacidade <= 0) {
 			throw new IllegalArgumentException("Erro: A capacidade não pode ser menor nem igual a 0!");
-		} 
-		this.capacidade = novaCapacidade;
+		} this.capacidade = novaCapacidade;
 	}
 	
 	private void setPlaca(String novaPlaca) {
 		// A placa não pode ser nula nem vazia:
 		if (novaPlaca == null || novaPlaca.trim().isEmpty()) {
 			throw new IllegalArgumentException("Erro: A placa informada é inválida!");
-		}
-		
-		this.placa = novaPlaca;
-		System.out.println("Sucesso: A placa agora é "+ this.placa);
+		} this.placa = novaPlaca;
 	}
 	
 }

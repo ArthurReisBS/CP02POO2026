@@ -4,6 +4,8 @@ import com.FiapDelivery.Classes.Caminhao;
 import com.FiapDelivery.Classes.Pacote;
 import com.FiapDelivery.Classes.Rota;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class SistemaPrincipal {
@@ -19,13 +21,18 @@ public class SistemaPrincipal {
 	    }
 	}
 	
+	// "Histórico de compras" para armazenar os pacotes:
+	static List<Pacote> historicoDeCompras = new ArrayList<>();
+	
 	public static void main(String[] args) {
 		// Iniciando variáveis para swicth case:
 		Scanner scanner = new Scanner(System.in);
 		boolean sair = false;
+		boolean sairMercadorias = false;
 		
 		// Sistema para o usuário:
-		while(sair == false) {
+		while(!sair) {
+			
 			// Opções:
 			System.out.println("------------------------------------");
 			System.out.println("-- Selecione a opção que desejar: --");
@@ -60,7 +67,7 @@ public class SistemaPrincipal {
 	        	System.out.println("\nErros dos pacotes ao tentar inicializar objetos com");
 	        	System.out.println("String do código vazio e com peso menor ou igual a 0:");
 	        	try {
-		        	Pacote erroPacote = new Pacote("", "", 0);
+		        	Pacote erroPacote = new Pacote("", 0);
 	                System.out.println("Pacote criado com sucesso!");
 	            } catch (IllegalArgumentException e) {
 	                System.err.println(e.getMessage());
@@ -72,7 +79,7 @@ public class SistemaPrincipal {
 	        	try {
 	        		// Iniciando Objetos de forma correta para exibir o erro da Rota:
 	        		Caminhao erroRotaCaminhao = new Caminhao("RGB1234", 4000);
-	        		Pacote erroRotaPacote = new Pacote("aad8AD8ad", "20x Pneus", 500);
+	        		Pacote erroRotaPacote = new Pacote("20x Pneus", 500);
 	        		
 	        		Rota rota = new Rota(erroRotaPacote, erroRotaCaminhao, "A", "");
 	                System.out.println("Rota criada com sucesso!");
@@ -84,18 +91,77 @@ public class SistemaPrincipal {
 	        	break;
 	        	
 	    	case 2: // Mostrar mercadorias disponíveis
+	    		// Inicializando variáveis:
+				Pacote pacoteSelecionado = null;
+				
+	    		while(!sairMercadorias) {
 	    		System.out.println("- LISTA DE MERCADORIAS DISPONÍVEIS -");
-	        	
-	        	esperarUsuario(scanner);
-	        	break;
+	    		System.out.println("------------------------------------");
+				System.out.println("-- Selecione o que deseja comprar: -");
+				System.out.println("------ 1: 12x Garfos - 1.12 KG -----");
+				System.out.println("-------- 2: Sofá - 200 KG ----------");
+				System.out.println("-- 3: Carro de brinquedo - 0.3 KG --");
+				System.out.println("-- 4: 10x Sacos de areia - 300 KG --");
+				System.out.println("------------------------------------");
+				System.out.print("Opção: ");
+				int opcaoCompra = scanner.nextInt();
+				
+					switch (opcaoCompra) {
+					case 0:
+			        	sairMercadorias = true;
+			            break;
+			            
+			        case 1:
+			        	try {
+			        		pacoteSelecionado = new Pacote("12x Garfos", 1.12);
+			            } catch (IllegalArgumentException e) {
+			                System.err.println(e.getMessage());
+			            }
+			            break;
+			            
+			        case 2:
+			        	try {
+			        		pacoteSelecionado = new Pacote("Sofá", 200.0);
+			            } catch (IllegalArgumentException e) {
+			                System.err.println(e.getMessage());
+			            }
+			            break;
+			            
+			        case 3:
+			        	try {
+			        		pacoteSelecionado = new Pacote("Carro de brinquedo", 0.3);
+			            } catch (IllegalArgumentException e) {
+			                System.err.println(e.getMessage());
+			            }
+			            break;
+			            
+			        case 4:
+			        	try {
+			        		pacoteSelecionado = new Pacote("10x Sacos de areia", 300.0);
+			            } catch (IllegalArgumentException e) {
+			                System.err.println(e.getMessage());
+			            }
+			            break;
+			            
+			        default:
+			            System.out.println("Opção inválida!");
+			            break;
+					}
+					
+					if (pacoteSelecionado != null && opcaoCompra != 0) {
+						historicoDeCompras.add(pacoteSelecionado);
+				        System.out.println("\nSucesso! " + pacoteSelecionado.getNomePacote() + " adicionado ao carrinho.");
+				        System.out.println("Você tem " + historicoDeCompras.size() + " pacote(s) no momento.");
+				    }
+				}	
+		        break;
 	        	
 	    	case 3: // Visualizador de pedidos
 	    		System.out.println("----------- SEUS PEDIDOS -----------");
-	        	
+	        	// Botar o pacoteStatus
+	    		
 	        	esperarUsuario(scanner);
-	        	break;
-	    	default:
-	    		System.out.println("SELECIONE UMA OPÇÃO VÁLIDA!!");
+	    		break;
 			}
 		}
 		
