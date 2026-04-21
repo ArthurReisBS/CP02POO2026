@@ -8,8 +8,8 @@ public class Veiculo {
 	private double capacidade;
 	
 	protected Veiculo(double capacidade) {
-		this.placa = UUID.randomUUID().toString().substring(0, 5).toUpperCase();
 		this.setCapacidade(capacidade);
+		this.placa = UUID.randomUUID().toString().substring(0, 5).toUpperCase();
 	}
 	
 	// Getters:
@@ -26,5 +26,12 @@ public class Veiculo {
 		if(novaCapacidade <= 0) {
 			throw new IllegalArgumentException("Erro: A capacidade não pode ser menor nem igual a 0!");
 		} this.capacidade = novaCapacidade;
+	}
+	
+	// Método:
+	public void capacidadeAposPacote(double pesoDoPacote) {
+		// Não precisamos jogar exceptions aqui, já que chamo o setCapacidade, que já tem essa verificação
+		double capacidadeRestante = this.capacidade - pesoDoPacote;
+		setCapacidade(capacidadeRestante);
 	}
 }

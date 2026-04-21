@@ -3,7 +3,7 @@ package com.FiapDelivery.Sistema;
 import com.FiapDelivery.Classes.Caminhao;
 import com.FiapDelivery.Classes.Moto;
 import com.FiapDelivery.Classes.Pacote;
-import com.FiapDelivery.Classes.Rota;
+import com.FiapDelivery.Classes.Pedidos;
 import com.FiapDelivery.Classes.Veiculo;
 
 import java.util.ArrayList;
@@ -32,14 +32,12 @@ public class SistemaPrincipal {
 	
 	// Históricos para armazenar os pacotes e suas entregas:
 	static List<Pacote> historicoDePacotes = new ArrayList<>();
-	static List<Veiculo> historicoDeVeiculos = new ArrayList<>();
-	static List<Rota> historicoDeRotas = new ArrayList<>();
+	static List<Pedidos> historicoDePedidos = new ArrayList<>();
 	
 	public static void main(String[] args) {
 		// Iniciando variáveis para swicth case:
 		Scanner scanner = new Scanner(System.in);
 		boolean sair = false;
-		boolean sairMercadorias = false;
 		
 		// Variáveis de rotas, já que por enquanto vou fazer elas estáticas:
 		String localRetirada = "Loja";
@@ -50,6 +48,7 @@ public class SistemaPrincipal {
 			
 			// Opções:
 			limparTela();
+			boolean sairMercadorias = false;
 			System.out.println("------------------------------------");
 			System.out.println("-- Selecione a opção que desejar: --");
 			System.out.println("------------- 0: Sair --------------");
@@ -73,7 +72,7 @@ public class SistemaPrincipal {
 	    		System.out.println("----------- TESTE DE ERROS ---------");
 	        	// Erros veículo:
 	    		System.out.println("Erros dos veículos ao tentar inicializar objetos com");
-	        	System.out.println("String da placa vazia e com peso menor ou igual a 0:");
+	        	System.out.println("peso menor ou igual a 0:");
 	        	try {
 	                Caminhao erroCaminhao = new Caminhao(-1);
 	                System.out.println("Caminhão criado com sucesso!");
@@ -99,7 +98,7 @@ public class SistemaPrincipal {
 	        		Caminhao erroRotaCaminhao = new Caminhao(4000);
 	        		Pacote erroRotaPacote = new Pacote("20x Pneus", 500);
 	        		
-	        		Rota rota = new Rota(erroRotaPacote, erroRotaCaminhao, "A", "");
+	        		Pedidos rota = new Pedidos(erroRotaPacote, erroRotaCaminhao, "A", "");
 	                System.out.println("Rota criada com sucesso!");
 	            } catch (IllegalArgumentException e) {
 	                System.err.println(e.getMessage());
@@ -115,7 +114,7 @@ public class SistemaPrincipal {
 				Pacote pacoteSelecionado = null;
 				Moto motoEntregas = null;
 				Caminhao caminhaoEntregas = null;
-				Rota rotaPedido = null;
+				Pedidos rotaPedido = null;
 				
 	    		while(!sairMercadorias) {
 	    		System.out.println("- LISTA DE MERCADORIAS DISPONÍVEIS -");
@@ -181,7 +180,7 @@ public class SistemaPrincipal {
 	    		
 	    		
 	    		if (historicoDePacotes.isEmpty()) {
-	    			return;
+	    			break;
 	    	    } else {
 	    	        System.out.println(historicoDePacotes.size() + " pacote(s) comprado(s)!");
 	    	        
@@ -194,12 +193,13 @@ public class SistemaPrincipal {
 				        		motoEntregas = new Moto(40);
 				        		
 				        		try {
-					        		rotaPedido = new Rota(pacoteAtual, motoEntregas, localRetirada, localEntrega);
+					        		rotaPedido = new Pedidos(pacoteAtual, motoEntregas, localRetirada, localEntrega);
 					            } catch (IllegalArgumentException e) {
 					                System.err.println(e.getMessage());
 					            }
 				        		
-				        		historicoDeVeiculos.add(motoEntregas);
+				        		// Verificando e mudando variável de capacidade, e após isso adicionando ao histórico de veículos:
+				        		motoEntregas.capacidadeAposPacote(pacoteAtual.getPesoPacote());
 				            } catch (IllegalArgumentException e) {
 				                System.err.println(e.getMessage());
 				            }
@@ -208,18 +208,19 @@ public class SistemaPrincipal {
 				        		caminhaoEntregas = new Caminhao(4000);
 				        		
 				        		try {
-					        		rotaPedido = new Rota(pacoteAtual, caminhaoEntregas, localRetirada, localEntrega);
+					        		rotaPedido = new Pedidos(pacoteAtual, caminhaoEntregas, localRetirada, localEntrega);
 					            } catch (IllegalArgumentException e) {
 					                System.err.println(e.getMessage());
 					            }
 				        		
-				        		historicoDeVeiculos.add(caminhaoEntregas);
+				        		// Verificando e mudando variável de capacidade, e após isso adicionando ao histórico de veículos:
+				        		caminhaoEntregas.capacidadeAposPacote(pacoteAtual.getPesoPacote());
 				            } catch (IllegalArgumentException e) {
 				                System.err.println(e.getMessage());
 				            }
 	    	        	}
 	    	        	
-	    	        	historicoDeRotas.add(rotaPedido);
+	    	        	historicoDePedidos.add(rotaPedido);
 	    	        }
 	    	    }
 	    		
@@ -231,36 +232,17 @@ public class SistemaPrincipal {
 	    		limparTela();
 	    		System.out.println("----------- SEUS PEDIDOS -----------");
 	    	
-	    	    if (historicoDePacotes.isEmpty()) {
+	    	    if (historicoDePedidos.isEmpty()) {
 	    	        System.out.println("Seu carrinho está vazio! Vá fazer algumas compras.");
 	    	    } else {
-	    	        System.out.println("Status dos seus " + historicoDePacotes.size() + " pacote(s):");
+	    	        System.out.println("Status dos seus " + historicoDePedidos.size() + " pedidos(s):");
 	    	        System.out.println("--------------------------------");
 	    	        
 	    	        // Como o número de pacotes tem que ser igual ao número de entregas, não precisamos repetir código
-	    	        for (int i = 0; i < historicoDePacotes.size(); i++) {
+	    	        for (int i = 0; i < historicoDePedidos.size(); i++) {
 	    	        	
-	    	        	Pacote pacoteAtual = historicoDePacotes.get(i);
-	    	        	Veiculo veiculoAtual = historicoDeVeiculos.get(i);
-	    	        	Rota rotaAtual = historicoDeRotas.get(i);
-	    	        	
-	    	        	System.out.println("--------------------------------");
-	    	        	System.out.println("-------- Sobre o pacote --------");
-	    	            System.out.println("   Código: " + pacoteAtual.getCodigoPacote());
-	    	            System.out.println("   Item: " + pacoteAtual.getNomePacote());
-	    	            System.out.println("   Peso: " + pacoteAtual.getPesoPacote() + " KG");
-	    	            System.out.println("-------- Sobre a etrega --------");
-	    	            if (veiculoAtual instanceof Caminhao) {
-	    	            	System.out.println("   Veículo: Caminhão");
-	    	            } else {
-	    	            	System.out.println("   Veículo: Moto");
-	    	            }
-	    	            System.out.println("   Placa do veículo: " + veiculoAtual.getPlaca());
-	    	            System.out.println("   Local de retirada: " + rotaAtual.getLocalRetirada());
-	    	            System.out.println("   Local de entrega: " + rotaAtual.getLocalEntrega());
-	    	            double capacidadeRestante = veiculoAtual.getCapacidade() - pacoteAtual.getPesoPacote();
-	    	            System.out.println("   Capacidade restante do veículo: " + capacidadeRestante + " KG");
-	    	            System.out.println("--------------------------------");
+	    	        	Pedidos pedidoAtual = historicoDePedidos.get(i);
+	    	        	pedidoAtual.statusPedido();
 	    	        }
 	    	    }
 	    		

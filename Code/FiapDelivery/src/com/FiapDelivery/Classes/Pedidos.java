@@ -1,6 +1,6 @@
 package com.FiapDelivery.Classes;
 
-public class Rota {
+public class Pedidos {
 	
 	// Atributos:
 	private String localRetirada;
@@ -8,7 +8,7 @@ public class Rota {
 	private Pacote produto;
 	private Veiculo transportador;
 	
-	public Rota(Pacote produto, Veiculo transportador, String localRetirada, String localEntrega) {
+	public Pedidos(Pacote produto, Veiculo transportador, String localRetirada, String localEntrega) {
 		if(produto.getPesoPacote() > transportador.getCapacidade()) {
 			throw new IllegalArgumentException("Erro: O pacote é mais pesado que a capacidade do transportador!");
 		}
@@ -42,12 +42,27 @@ public class Rota {
 		return this.localRetirada;
 	}
 	
-	public Pacote getPacote() {
-		return this.produto;
+	public String getQualVeiculo() {
+		if (transportador instanceof Caminhao) {
+			return "Caminhão";
+		} else {
+			return "Moto";
+		}
 	}
 	
-	public Veiculo getVeiculo() {
-		return this.transportador;
+	// Método para saber das entregas:
+	public void statusPedido() {
+		System.out.println("--------------------------------");
+		System.out.println("-------- Sobre o pacote --------");
+	    System.out.println("   Código: " + produto.getCodigoPacote());
+	    System.out.println("   Item: " + produto.getNomePacote());
+	    System.out.println("   Peso: " + produto.getPesoPacote() + " KG");
+	    System.out.println("-------- Sobre a etrega --------");
+	    System.out.println("   veículo: " + getQualVeiculo());
+	    System.out.println("   Placa do veículo: " + transportador.getPlaca());
+	    System.out.println("   Local de retirada: " + getLocalRetirada());
+	    System.out.println("   Local de entrega: " + getLocalEntrega());
+	    System.out.println("   Capacidade restante do veículo: " + transportador.getCapacidade() + " KG");
+	    System.out.println("--------------------------------");
 	}
-	
 }

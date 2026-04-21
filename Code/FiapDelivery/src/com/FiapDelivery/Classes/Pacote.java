@@ -58,18 +58,11 @@ public class Pacote {
 	}
 	
 	// Método:
+	// Esse método ainda não foi usado no código, mas representa como seria se o pacote chegasse realmente a algum lugar:
 	public void mudaSituacaoEntrega(int novaSituacao) {
 		if(novaSituacao > 2 || novaSituacao < 0) {
 			throw new IllegalArgumentException("Erro: A situação só pode ser marcada por 0(Preparando), 1(A caminho) e 2(Entregue)!");
 		} this.situacaoPacote = novaSituacao;
 	}
 	
-	// Métodos:
-		public void pacoteStatus() {
-			System.out.println("------------------------------------");
-			System.out.println("Situação do pacote: "+ getSituacaoPacote());
-			System.out.println("Nome do pacote: "+ getNomePacote());
-			System.out.println("Código do pacote: "+ getCodigoPacote());
-			System.out.println("Peso do pacote: "+ getPesoPacote());
-		}
 }
