@@ -1,8 +1,10 @@
 package com.FiapDelivery.Sistema;
 
 import com.FiapDelivery.Classes.Caminhao;
+import com.FiapDelivery.Classes.Moto;
 import com.FiapDelivery.Classes.Pacote;
 import com.FiapDelivery.Classes.Rota;
+import com.FiapDelivery.Classes.Veiculo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +23,17 @@ public class SistemaPrincipal {
 	    }
 	}
 	
-	// "Histórico de compras" para armazenar os pacotes:
-	static List<Pacote> historicoDeCompras = new ArrayList<>();
+	// Para ajudar na clareza do terminal:
+	private static void limparTela() {
+	    for (int i = 0; i < 30; i++) {
+	        System.out.println();
+	    }
+	}
+	
+	// Históricos para armazenar os pacotes e suas entregas:
+	static List<Pacote> historicoDePacotes = new ArrayList<>();
+	static List<Veiculo> historicoDeVeiculos = new ArrayList<>();
+	static List<Rota> historicoDeRotas = new ArrayList<>();
 	
 	public static void main(String[] args) {
 		// Iniciando variáveis para swicth case:
@@ -30,10 +41,15 @@ public class SistemaPrincipal {
 		boolean sair = false;
 		boolean sairMercadorias = false;
 		
+		// Variáveis de rotas, já que por enquanto vou fazer elas estáticas:
+		String localRetirada = "Loja";
+		String localEntrega = "Sua casa";
+		
 		// Sistema para o usuário:
 		while(!sair) {
 			
 			// Opções:
+			limparTela();
 			System.out.println("------------------------------------");
 			System.out.println("-- Selecione a opção que desejar: --");
 			System.out.println("------------- 0: Sair --------------");
@@ -47,17 +63,19 @@ public class SistemaPrincipal {
 			// Switch case para selecionar a ação desejada:
 			switch (opcao) {
 	    	case 0: // Sair
+	    		limparTela();
 	    		System.out.println("Desligando sistema...");
 	        	sair = true;
 	        	break;
 	        	
 	    	case 1: // Teste de erros
+	    		limparTela();
 	    		System.out.println("----------- TESTE DE ERROS ---------");
 	        	// Erros veículo:
 	    		System.out.println("Erros dos veículos ao tentar inicializar objetos com");
 	        	System.out.println("String da placa vazia e com peso menor ou igual a 0:");
 	        	try {
-	                Caminhao erroCaminhao = new Caminhao("", -1);
+	                Caminhao erroCaminhao = new Caminhao(-1);
 	                System.out.println("Caminhão criado com sucesso!");
 	            } catch (IllegalArgumentException e) {
 	                System.err.println(e.getMessage());
@@ -78,7 +96,7 @@ public class SistemaPrincipal {
 	        	System.out.println("String do local de retirada e de entrega vazios:");
 	        	try {
 	        		// Iniciando Objetos de forma correta para exibir o erro da Rota:
-	        		Caminhao erroRotaCaminhao = new Caminhao("RGB1234", 4000);
+	        		Caminhao erroRotaCaminhao = new Caminhao(4000);
 	        		Pacote erroRotaPacote = new Pacote("20x Pneus", 500);
 	        		
 	        		Rota rota = new Rota(erroRotaPacote, erroRotaCaminhao, "A", "");
@@ -88,16 +106,22 @@ public class SistemaPrincipal {
 	            }
 	        	
 	        	esperarUsuario(scanner);
+	        	limparTela();
 	        	break;
 	        	
 	    	case 2: // Mostrar mercadorias disponíveis
+	    		limparTela();
 	    		// Inicializando variáveis:
 				Pacote pacoteSelecionado = null;
+				Moto motoEntregas = null;
+				Caminhao caminhaoEntregas = null;
+				Rota rotaPedido = null;
 				
 	    		while(!sairMercadorias) {
 	    		System.out.println("- LISTA DE MERCADORIAS DISPONÍVEIS -");
 	    		System.out.println("------------------------------------");
 				System.out.println("-- Selecione o que deseja comprar: -");
+				System.out.println("--- 0: Comprar os pacotes e sair ---");
 				System.out.println("------ 1: 12x Garfos - 1.12 KG -----");
 				System.out.println("-------- 2: Sofá - 200 KG ----------");
 				System.out.println("-- 3: Carro de brinquedo - 0.3 KG --");
@@ -149,18 +173,99 @@ public class SistemaPrincipal {
 					}
 					
 					if (pacoteSelecionado != null && opcaoCompra != 0) {
-						historicoDeCompras.add(pacoteSelecionado);
-				        System.out.println("\nSucesso! " + pacoteSelecionado.getNomePacote() + " adicionado ao carrinho.");
-				        System.out.println("Você tem " + historicoDeCompras.size() + " pacote(s) no momento.");
+						historicoDePacotes.add(pacoteSelecionado);
+				        System.out.println("\nSucesso! " + pacoteSelecionado.getNomePacote() + " adicionado às compras.");
+				        System.out.println("Você tem " + historicoDePacotes.size() + " pacote(s) no momento.");
 				    }
-				}	
+				}
+	    		
+	    		
+	    		if (historicoDePacotes.isEmpty()) {
+	    			return;
+	    	    } else {
+	    	        System.out.println(historicoDePacotes.size() + " pacote(s) comprado(s)!");
+	    	        
+	    	        // Selecionando motoristas e rotas para cada pacote:
+	    	        for (Pacote pacoteAtual : historicoDePacotes) {
+	    	        	
+	    	        	// Criando o veículo com base no peso do pacote:
+	    	        	if(pacoteAtual.getPesoPacote() <= 40) {
+	    	        		try {
+				        		motoEntregas = new Moto(40);
+				        		
+				        		try {
+					        		rotaPedido = new Rota(pacoteAtual, motoEntregas, localRetirada, localEntrega);
+					            } catch (IllegalArgumentException e) {
+					                System.err.println(e.getMessage());
+					            }
+				        		
+				        		historicoDeVeiculos.add(motoEntregas);
+				            } catch (IllegalArgumentException e) {
+				                System.err.println(e.getMessage());
+				            }
+	    	        	} else {
+	    	        		try {
+				        		caminhaoEntregas = new Caminhao(4000);
+				        		
+				        		try {
+					        		rotaPedido = new Rota(pacoteAtual, caminhaoEntregas, localRetirada, localEntrega);
+					            } catch (IllegalArgumentException e) {
+					                System.err.println(e.getMessage());
+					            }
+				        		
+				        		historicoDeVeiculos.add(caminhaoEntregas);
+				            } catch (IllegalArgumentException e) {
+				                System.err.println(e.getMessage());
+				            }
+	    	        	}
+	    	        	
+	    	        	historicoDeRotas.add(rotaPedido);
+	    	        }
+	    	    }
+	    		
+	    		esperarUsuario(scanner);
+	    		limparTela();
 		        break;
 	        	
 	    	case 3: // Visualizador de pedidos
+	    		limparTela();
 	    		System.out.println("----------- SEUS PEDIDOS -----------");
-	        	// Botar o pacoteStatus
+	    	
+	    	    if (historicoDePacotes.isEmpty()) {
+	    	        System.out.println("Seu carrinho está vazio! Vá fazer algumas compras.");
+	    	    } else {
+	    	        System.out.println("Status dos seus " + historicoDePacotes.size() + " pacote(s):");
+	    	        System.out.println("--------------------------------");
+	    	        
+	    	        // Como o número de pacotes tem que ser igual ao número de entregas, não precisamos repetir código
+	    	        for (int i = 0; i < historicoDePacotes.size(); i++) {
+	    	        	
+	    	        	Pacote pacoteAtual = historicoDePacotes.get(i);
+	    	        	Veiculo veiculoAtual = historicoDeVeiculos.get(i);
+	    	        	Rota rotaAtual = historicoDeRotas.get(i);
+	    	        	
+	    	        	System.out.println("--------------------------------");
+	    	        	System.out.println("-------- Sobre o pacote --------");
+	    	            System.out.println("   Código: " + pacoteAtual.getCodigoPacote());
+	    	            System.out.println("   Item: " + pacoteAtual.getNomePacote());
+	    	            System.out.println("   Peso: " + pacoteAtual.getPesoPacote() + " KG");
+	    	            System.out.println("-------- Sobre a etrega --------");
+	    	            if (veiculoAtual instanceof Caminhao) {
+	    	            	System.out.println("   Veículo: Caminhão");
+	    	            } else {
+	    	            	System.out.println("   Veículo: Moto");
+	    	            }
+	    	            System.out.println("   Placa do veículo: " + veiculoAtual.getPlaca());
+	    	            System.out.println("   Local de retirada: " + rotaAtual.getLocalRetirada());
+	    	            System.out.println("   Local de entrega: " + rotaAtual.getLocalEntrega());
+	    	            double capacidadeRestante = veiculoAtual.getCapacidade() - pacoteAtual.getPesoPacote();
+	    	            System.out.println("   Capacidade restante do veículo: " + capacidadeRestante + " KG");
+	    	            System.out.println("--------------------------------");
+	    	        }
+	    	    }
 	    		
 	        	esperarUsuario(scanner);
+	        	limparTela();
 	    		break;
 			}
 		}

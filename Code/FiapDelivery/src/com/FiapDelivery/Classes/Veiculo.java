@@ -1,12 +1,14 @@
 package com.FiapDelivery.Classes;
 
+import java.util.UUID;
+
 public class Veiculo {
 	// Atributos:
 	private String placa;
 	private double capacidade;
 	
-	protected Veiculo(String placa, double capacidade) {
-		this.setPlaca(placa);
+	protected Veiculo(double capacidade) {
+		this.placa = UUID.randomUUID().toString().substring(0, 5).toUpperCase();
 		this.setCapacidade(capacidade);
 	}
 	
@@ -19,18 +21,10 @@ public class Veiculo {
 		return this.capacidade;
 	}
 	
-	// Setters:
+	// Setter:
 	private void setCapacidade(double novaCapacidade) {
 		if(novaCapacidade <= 0) {
 			throw new IllegalArgumentException("Erro: A capacidade não pode ser menor nem igual a 0!");
 		} this.capacidade = novaCapacidade;
 	}
-	
-	private void setPlaca(String novaPlaca) {
-		// A placa não pode ser nula nem vazia:
-		if (novaPlaca == null || novaPlaca.trim().isEmpty()) {
-			throw new IllegalArgumentException("Erro: A placa informada é inválida!");
-		} this.placa = novaPlaca;
-	}
-	
 }

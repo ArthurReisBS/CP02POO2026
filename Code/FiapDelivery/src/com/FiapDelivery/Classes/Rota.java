@@ -9,7 +9,7 @@ public class Rota {
 	private Veiculo transportador;
 	
 	public Rota(Pacote produto, Veiculo transportador, String localRetirada, String localEntrega) {
-		if(produto.getPeso() > transportador.getCapacidade()) {
+		if(produto.getPesoPacote() > transportador.getCapacidade()) {
 			throw new IllegalArgumentException("Erro: O pacote é mais pesado que a capacidade do transportador!");
 		}
 		

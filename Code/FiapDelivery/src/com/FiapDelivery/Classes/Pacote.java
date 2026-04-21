@@ -8,10 +8,13 @@ public class Pacote {
 	private String codigoPacote;
 	private String nomePacote;
 	private double peso;
-	private int situacaoEntrega;
+	
+	// Variáveis para decidir e mostrar a situação do pacote:
+	private int situacaoPacote;
+	private String situacaoPacoteFrase;
 	
 	public Pacote(String nomePacote, double peso) {
-		this.situacaoEntrega = 0;
+		this.situacaoPacote = 0;
 		this.codigoPacote = UUID.randomUUID().toString().substring(0, 5).toUpperCase();
 		this.setNomePacote(nomePacote);
 		this.setPeso(peso);
@@ -22,7 +25,7 @@ public class Pacote {
 		return this.codigoPacote;
 	}
 	
-	public double getPeso() {
+	public double getPesoPacote() {
 		return this.peso;
 	}
 	
@@ -30,14 +33,14 @@ public class Pacote {
 		return this.nomePacote;
 	}
 	
-	public void getSituacaoEntrega() {
-		if(this.situacaoEntrega == 0 ) {
-			System.out.println("O pedido está em fase de preparo.");
-		} else if(this.situacaoEntrega == 1) {
-			System.out.println("O pedido está a caminho.");
+	public String getSituacaoPacote() {
+		if(this.situacaoPacote == 0 ) {
+			this.situacaoPacoteFrase = "O pedido está em fase de preparo.";
+		} else if(this.situacaoPacote == 1) {
+			this.situacaoPacoteFrase ="O pedido está a caminho.";
 		} else {
-			System.out.println("O pedido foi entregue.");
-		}
+			this.situacaoPacoteFrase = "O pedido foi entregue.";
+		} return this.situacaoPacoteFrase;
 	}
 	
 	// Setters:
@@ -58,14 +61,15 @@ public class Pacote {
 	public void mudaSituacaoEntrega(int novaSituacao) {
 		if(novaSituacao > 2 || novaSituacao < 0) {
 			throw new IllegalArgumentException("Erro: A situação só pode ser marcada por 0(Preparando), 1(A caminho) e 2(Entregue)!");
-		} this.situacaoEntrega = novaSituacao;
+		} this.situacaoPacote = novaSituacao;
 	}
 	
 	// Métodos:
 		public void pacoteStatus() {
 			System.out.println("------------------------------------");
-			System.out.println("--- MOSTRANDO STATUS DAS COMPRAS ---");
-			System.out.println("Código do pacote: ");
-			System.out.println("");
+			System.out.println("Situação do pacote: "+ getSituacaoPacote());
+			System.out.println("Nome do pacote: "+ getNomePacote());
+			System.out.println("Código do pacote: "+ getCodigoPacote());
+			System.out.println("Peso do pacote: "+ getPesoPacote());
 		}
 }
