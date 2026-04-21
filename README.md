@@ -16,18 +16,22 @@
 Esse repositório diz respeito ao CheckPoint 02 de Programação Orientada a Objeto, matéria no segundo ano de Ciência da Computação da FIAP.
 A ideia do CheckPoint é refatorar completamente o código de um "estagiário".
 
-Proposta dada pelo professor: 
+Proposta dada pelo professor:
+
 ![Imagem da proposta](./img/proposta.png).
 
 Código do "estagiário":
+
 ![Primeira imagem do código do estagiário](./img/codigoAntigoP1.png)
 ![Segunda imagem do código do estagiário](./img/codigoAntigoP2.png)
 
 Precisamos também refazer o Astah planejado pelo estagiário.
 Astah do estagiário:
+
 ![Astah do estagiário](./img/velhoAstah.png)
 
 Meu Astah:
+
 ![Meu Astah](./img/novoAstah.png)
 
 ---
@@ -53,9 +57,11 @@ Inicialização dos Objetos:
 Sempre é importante inicializar objetos com try e catch, e nas Classes ter empecilhos que, além de não montarem o Objeto quando há algo de errado, também mandam uma mensagem de erro.
 
 Imagem do Try e Catch:
+
 ![Imagem do meu código](./img/codigoNovoP2.png)
 
 Imagem da mensagem de erro na classe:
+
 ![Imagem do meu código](./img/codigoNovoP3.png)
 ---
 # Explicações sobre as Classes
